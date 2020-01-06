@@ -1,0 +1,55 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9001/eureka/
+  instance:
+    prefer-ip-address: true
+    # ip-address: 192.168.100.17
+server:
+  port: 9028
+spring:
+  #  profiles:
+  #    active: aws
+  application:
+    name: FixService
+
+  datasource:
+    url: jdbc:mysql://192.168.100.11:3306/user_service?&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: EYcaDDDoLZ2waFCv
+    driver-class-name: com.mysql.jdbc.Driver
+
+quickfixj:
+  client:
+    config: classpath:quickfixj-client.cfg
+
+feign:
+  client:
+    default:
+      #这里时间一定要调长，否则feign客户端会报ReadTimeOut  服务端报Error parsing HTTP request header
+      connectTimeout: 30000
+      readTimeout: 30000
+      loggerLevel: basic
+
+#开放所有页面节点  默认只开启了health、info两个节点
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+mybatis:
+  type-aliases-package: sg.ctx.user.core.domain
+  mapper-locations:
+    - classpath*:sg/**/mapper/*.xml
+  type-handlers-package: sg.ctx.user.core.utils.EnumTypeHandler
+
+swagger:
+  basePackage: sg.ctx.user.core.controller # api 文档包名， 产品环境配置成com.product, 这样不会显示任何API
+
+logging:
+  level:
+    root: INFO
+  config: classpath:logging-config.xml
+

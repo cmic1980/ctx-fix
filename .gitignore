@@ -1,0 +1,4 @@
+# Project exclude paths
+/.gradle/
+/ctx-fix-service/build/
+/ctx-fix-service/build/classes/java/main/
